@@ -53,6 +53,30 @@ const connectDB = async () => {
         });
 
 
+        //PUT a product
+        app.put("/update/:id", async (req, res) => {
+            const document = req.body;
+            const id = req.params;
+            const updatedDocument = {
+                $set: {
+                    name: document.name,
+                    brand: document.brand,
+                    type: document.type,
+                    price: document.price,
+                    photo: document.photo,
+                    rating: document.rating,
+                    description: document.description
+                }
+            }
+            const filter = { _id: new ObjectId(id) };
+            const options = { upsert: true };
+
+            const result = await productCollection.updateOne(filter, updatedDocument, options);
+            res.send(result);
+
+        });
+
+
 
 
         //GET sliders
