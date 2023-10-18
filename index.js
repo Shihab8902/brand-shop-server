@@ -26,6 +26,7 @@ const connectDB = async () => {
         await client.connect();
 
         const productCollection = client.db("productDB").collection("products");
+        const slidersCollection = client.db("productDB").collection("sliders");
 
 
 
@@ -33,12 +34,24 @@ const connectDB = async () => {
         app.get("/products", async (req, res) => {
             const result = await productCollection.find().toArray();
             res.send(result);
-        })
+        });
+
+
+        //POST product
+        app.post("/products", async (req, res) => {
+            const document = req.body;
+            const result = await productCollection.insertOne(document);
+            res.send(result);
+        });
 
 
 
 
-
+        //GET sliders
+        app.get("/sliders", async (req, res) => {
+            const sliders = await slidersCollection.find().toArray();
+            res.send(sliders);
+        });
 
 
 
