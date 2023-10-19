@@ -26,6 +26,7 @@ const connectDB = async () => {
 
         const productCollection = client.db("productDB").collection("products");
         const slidersCollection = client.db("productDB").collection("sliders");
+        const cartCollection = client.db("productDB").collection("cart");
 
 
 
@@ -74,6 +75,22 @@ const connectDB = async () => {
             const result = await productCollection.updateOne(filter, updatedDocument, options);
             res.send(result);
 
+        });
+
+
+
+        //GET cart items
+        app.get("/cart", async (req, res) => {
+            const cartItems = await cartCollection.find().toArray();
+            res.send(cartItems);
+        });
+
+
+        //POST cart items
+        app.post("/cart", async (req, res) => {
+            const cartDocument = req.body;
+            const result = await cartCollection.insertOne(cartDocument);
+            res.send(result);
         });
 
 
