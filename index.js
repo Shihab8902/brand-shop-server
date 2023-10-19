@@ -66,7 +66,6 @@ const connectDB = async () => {
                     price: document.price,
                     photo: document.photo,
                     rating: document.rating,
-                    description: document.description
                 }
             }
             const filter = { _id: new ObjectId(id) };
